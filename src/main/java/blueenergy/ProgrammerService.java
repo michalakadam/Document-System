@@ -3,18 +3,14 @@ package blueenergy;
 import blueenergy.document.*;
 import blueenergy.organization.User;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.function.Function;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public class ProgrammerService {
+class ProgrammerService {
 
 
-    public void execute(DocumentDao documentDao) {
+    void execute(DocumentDao documentDao) {
         @SuppressWarnings("unchecked")
         List<Questionnaire> questionnaireList = (List<Questionnaire>) filterDocuments(documentDao, Questionnaire.class);
         @SuppressWarnings("unchecked")
