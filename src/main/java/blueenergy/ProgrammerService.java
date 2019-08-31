@@ -5,6 +5,8 @@ import blueenergy.organization.User;
 
 import java.util.List;
 import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class ProgrammerService {
@@ -17,6 +19,7 @@ public class ProgrammerService {
         List<ApplicationForHolidays> applicationForHolidaysList = (List<ApplicationForHolidays>) filterDocuments(documentDao, ApplicationForHolidays.class);
         double averageNumberOfAnswersForAllQuestionsInAllQuestionnaires = calculateAverageNumberOfAnswers(questionnaireList);
         List<User> usersApplyingForHolidays = extractUsersFromApplications(applicationForHolidaysList);
+        List<User> usersWithPolishCharacters = filterUsersWithPolishCharacters(usersApplyingForHolidays);
     }
 
     private List<? extends Document> filterDocuments(DocumentDao documentDao, Class<? extends Document> classType) {
@@ -55,5 +58,17 @@ public class ProgrammerService {
                 .stream()
                 .map((ApplicationForHolidays::getUserWhoRequestAboutHolidays))
                 .collect(Collectors.toList());
+    }
+
+    private List<User> filterUsersWithPolishCharacters(List<User> users) {
+        return users
+                .stream()
+                .filter(this::userLoginContainsPolishCharacters)
+                .collect(Collectors.toList());
+    }
+
+    private boolean userLoginContainsPolishCharacters(User user) {
+        final String polishCharactersRegex = ".*[ąĄęĘśŚćĆżŻźŹóÓłŁńŃ].*";
+        return user.getLogin().matches((polishCharactersRegex));
     }
 }
