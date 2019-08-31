@@ -19,6 +19,8 @@ class ProgrammerService {
         List<User> usersApplyingForHolidays = extractUsersFromApplications(applicationForHolidaysList);
         List<User> usersWithPolishCharacters = filterUsersWithPolishCharacters(usersApplyingForHolidays);
         List<ApplicationForHolidays> applicationsWithWrongDates = checkForApplicationsWithWrongDates(applicationForHolidaysList);
+        QuestionnaireConverter converter = QuestionnaireConverter.newInstance();
+        questionnaireList.stream().forEach(converter::convert);
     }
 
     private List<? extends Document> filterDocuments(DocumentDao documentDao, Class<? extends Document> classType) {
