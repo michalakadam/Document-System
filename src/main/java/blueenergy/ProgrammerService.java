@@ -13,7 +13,7 @@ public class ProgrammerService {
         List<Questionnaire> questionnaireList = (List<Questionnaire>) filterDocuments(documentDao, Questionnaire.class);
         @SuppressWarnings("unchecked")
         List<ApplicationForHolidays> applicationForHolidaysList = (List<ApplicationForHolidays>) filterDocuments(documentDao, ApplicationForHolidays.class);
-        int averageNumberOfAnswersForAllQuestionsInAllQuestionnaires = calculateAverageNumberOfAnswers(questionnaireList);
+        double averageNumberOfAnswersForAllQuestionsInAllQuestionnaires = calculateAverageNumberOfAnswers(questionnaireList);
         System.out.println(averageNumberOfAnswersForAllQuestionsInAllQuestionnaires);
     }
 
@@ -25,7 +25,7 @@ public class ProgrammerService {
                 .collect(Collectors.toList());
     }
 
-    private int calculateAverageNumberOfAnswers(List<Questionnaire> questionnaireList) {
+    private double calculateAverageNumberOfAnswers(List<Questionnaire> questionnaireList) {
         int numberOfQuestions = 0;
         int numberOfPossibleAnswers = 0;
         for (Questionnaire questionnaire : questionnaireList) {
@@ -44,7 +44,7 @@ public class ProgrammerService {
     }
 
 
-    private int calculateAverage(int numberOfPossibleAnswers, int numberOfQuestions) {
+    private double calculateAverage(double numberOfPossibleAnswers, double numberOfQuestions) {
         return numberOfPossibleAnswers/numberOfQuestions;
     }
 }
