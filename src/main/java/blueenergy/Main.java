@@ -1,4 +1,6 @@
-import pl.blueenergy.document.DocumentDao;
+package blueenergy;
+
+import blueenergy.document.DocumentDao;
 
 public class Main {
 	

@@ -1,8 +1,9 @@
-package pl.blueenergy.document;
+package blueenergy.document;
+
+import blueenergy.organization.User;
 
 import java.util.Date;
 
-import pl.blueenergy.organization.User;
 
 public class ApplicationForHolidays extends Document{
 

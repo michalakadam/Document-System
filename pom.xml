@@ -71,7 +71,7 @@
                         <index>true</index>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>Main</mainClass>
+                            <mainClass>blueenergy.Main</mainClass>
                         </manifest>
                         <manifestEntries>
                             <mode>development</mode>

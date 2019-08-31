@@ -1,4 +1,4 @@
-package pl.blueenergy.document;
+package blueenergy.document;
 
 import java.util.Date;
 

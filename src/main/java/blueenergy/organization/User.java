@@ -1,4 +1,4 @@
-package pl.blueenergy.organization;
+package blueenergy.organization;
 
 public class User {
 	private String login;

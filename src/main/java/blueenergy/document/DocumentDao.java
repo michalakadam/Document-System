@@ -1,13 +1,9 @@
-package pl.blueenergy.document;
+package blueenergy.document;
 
-import java.util.ArrayList;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import blueenergy.organization.User;
 
-import pl.blueenergy.organization.User;
+import java.util.*;
 
 public class DocumentDao {
 

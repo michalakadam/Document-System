@@ -1,4 +1,9 @@
-import pl.blueenergy.document.*;
+package blueenergy;
+
+import blueenergy.document.ApplicationForHolidays;
+import blueenergy.document.Document;
+import blueenergy.document.DocumentDao;
+import blueenergy.document.Questionnaire;
 
 import java.util.ArrayList;
 import java.util.HashMap;

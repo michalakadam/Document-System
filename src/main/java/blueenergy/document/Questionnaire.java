@@ -1,15 +1,15 @@
- package pl.blueenergy.document;
+package blueenergy.document;
 
 import java.util.ArrayList;
-
 import java.util.List;
+import java.util.Objects;
 
 
-public class Questionnaire extends Document{
+ public class Questionnaire extends Document{
 
 	private String title;
 	private List<Question> questions = new ArrayList<>();
-	
+
 	public String getTitle() {
 		return title;
 	}
@@ -22,6 +22,4 @@ public class Questionnaire extends Document{
 	public void setQuestions(List<Question> questions) {
 		this.questions = questions;
 	}
-	
-	
-}
+ }
