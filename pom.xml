@@ -71,7 +71,7 @@
                         <index>true</index>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>dev.michalak.adam.BlueTestDocumentSystem</mainClass>
+                            <mainClass>Main</mainClass>
                         </manifest>
                         <manifestEntries>
                             <mode>development</mode>
