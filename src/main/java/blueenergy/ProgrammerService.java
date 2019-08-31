@@ -1,9 +1,6 @@
 package blueenergy;
 
-import blueenergy.document.ApplicationForHolidays;
-import blueenergy.document.Document;
-import blueenergy.document.DocumentDao;
-import blueenergy.document.Questionnaire;
+import blueenergy.document.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,18 +8,22 @@ import java.util.List;
 import java.util.Map;
 
 public class ProgrammerService {
+	private final List<Questionnaire> questionnaireList = new ArrayList<>();
+	private final List<ApplicationForHolidays> applicationForHolidaysList = new ArrayList<>();
 
 
 
 	public void execute(DocumentDao documentDao) {
-		List<Questionnaire> questionnaireList = new ArrayList<>();
-		List<ApplicationForHolidays> applicationForHolidaysList = new ArrayList<>();
+		splitDocumentsIntoListsOfSpecificSubclasses(documentDao);
+	}
+
+	void splitDocumentsIntoListsOfSpecificSubclasses(DocumentDao documentDao) {
 		for(Document document : documentDao.getAllDocumentsInDatabase()){
 			if (document instanceof Questionnaire) {
-				questionnaireList.add((Questionnaire)document);
+				this.questionnaireList.add((Questionnaire)document);
 			}
 			else if (document instanceof ApplicationForHolidays) {
-				applicationForHolidaysList.add((ApplicationForHolidays)document);
+				this.applicationForHolidaysList.add((ApplicationForHolidays)document);
 			}
 		}
 	}
