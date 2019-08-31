@@ -1,30 +1,27 @@
 package blueenergy;
 
-import blueenergy.document.*;
+import blueenergy.document.ApplicationForHolidays;
+import blueenergy.document.Document;
+import blueenergy.document.DocumentDao;
+import blueenergy.document.Questionnaire;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ProgrammerService {
-	private final List<Questionnaire> questionnaireList = new ArrayList<>();
-	private final List<ApplicationForHolidays> applicationForHolidaysList = new ArrayList<>();
 
 
+    public void execute(DocumentDao documentDao) {
+        List<? extends Document> questionnaireList = filterDocuments(documentDao, Questionnaire.class);
+        List<? extends Document> applicationForHolidaysList = filterDocuments(documentDao, ApplicationForHolidays.class);
+    }
 
-	public void execute(DocumentDao documentDao) {
-		splitDocumentsIntoListsOfSpecificSubclasses(documentDao);
-	}
+    private List<Document> filterDocuments(DocumentDao documentDao, Class classType) {
+        return documentDao
+                .getAllDocumentsInDatabase()
+                .stream()
+                .filter(document -> document.getClass().equals(classType))
+                .collect(Collectors.toList());
+    }
 
-	void splitDocumentsIntoListsOfSpecificSubclasses(DocumentDao documentDao) {
-		for(Document document : documentDao.getAllDocumentsInDatabase()){
-			if (document instanceof Questionnaire) {
-				this.questionnaireList.add((Questionnaire)document);
-			}
-			else if (document instanceof ApplicationForHolidays) {
-				this.applicationForHolidaysList.add((ApplicationForHolidays)document);
-			}
-		}
-	}
 }
