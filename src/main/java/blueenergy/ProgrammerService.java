@@ -1,8 +1,10 @@
 package blueenergy;
 
 import blueenergy.document.*;
+import blueenergy.organization.User;
 
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class ProgrammerService {
@@ -14,7 +16,7 @@ public class ProgrammerService {
         @SuppressWarnings("unchecked")
         List<ApplicationForHolidays> applicationForHolidaysList = (List<ApplicationForHolidays>) filterDocuments(documentDao, ApplicationForHolidays.class);
         double averageNumberOfAnswersForAllQuestionsInAllQuestionnaires = calculateAverageNumberOfAnswers(questionnaireList);
-        System.out.println(averageNumberOfAnswersForAllQuestionsInAllQuestionnaires);
+        List<User> usersApplyingForHolidays = extractUsersFromApplications(applicationForHolidaysList);
     }
 
     private List<? extends Document> filterDocuments(DocumentDao documentDao, Class<? extends Document> classType) {
@@ -46,5 +48,12 @@ public class ProgrammerService {
 
     private double calculateAverage(double numberOfPossibleAnswers, double numberOfQuestions) {
         return numberOfPossibleAnswers/numberOfQuestions;
+    }
+
+    private List<User> extractUsersFromApplications(List<ApplicationForHolidays> applicationForHolidaysList) {
+        return applicationForHolidaysList
+                .stream()
+                .map((ApplicationForHolidays::getUserWhoRequestAboutHolidays))
+                .collect(Collectors.toList());
     }
 }
