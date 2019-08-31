@@ -3,6 +3,8 @@ package blueenergy;
 import blueenergy.document.*;
 import blueenergy.organization.User;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -20,6 +22,7 @@ public class ProgrammerService {
         double averageNumberOfAnswersForAllQuestionsInAllQuestionnaires = calculateAverageNumberOfAnswers(questionnaireList);
         List<User> usersApplyingForHolidays = extractUsersFromApplications(applicationForHolidaysList);
         List<User> usersWithPolishCharacters = filterUsersWithPolishCharacters(usersApplyingForHolidays);
+        List<ApplicationForHolidays> applicationsWithWrongDates = checkForApplicationsWithWrongDates(applicationForHolidaysList);
     }
 
     private List<? extends Document> filterDocuments(DocumentDao documentDao, Class<? extends Document> classType) {
@@ -70,5 +73,16 @@ public class ProgrammerService {
     private boolean userLoginContainsPolishCharacters(User user) {
         final String polishCharactersRegex = ".*[ąĄęĘśŚćĆżŻźŹóÓłŁńŃ].*";
         return user.getLogin().matches((polishCharactersRegex));
+    }
+
+    private List<ApplicationForHolidays> checkForApplicationsWithWrongDates(List<ApplicationForHolidays> applications) {
+        return applications
+                .stream()
+                .filter(application -> isDateOrderIncorrect(application.getSince(), application.getTo()))
+                .collect(Collectors.toList());
+    }
+
+    private boolean isDateOrderIncorrect(Date dateSince, Date dateTo) {
+        return dateSince.compareTo(dateTo) < 0;
     }
 }
