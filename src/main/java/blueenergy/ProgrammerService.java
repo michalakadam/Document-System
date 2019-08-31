@@ -40,11 +40,7 @@ class ProgrammerService {
     }
 
     private int sumAllPossibleAnswers(Questionnaire questionnaire) {
-        int amountOfPossibleAnswers = 0;
-        for (Question question : questionnaire.getQuestions()) {
-            amountOfPossibleAnswers += question.getPossibleAnswers().size();
-        }
-        return amountOfPossibleAnswers;
+        return questionnaire.getQuestions().stream().mapToInt(question -> question.getPossibleAnswers().size()).sum();
     }
 
 
