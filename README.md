@@ -4,6 +4,8 @@
 
 *Template for this project was automatically generated using [Mantra.sh](https://github.com/michalakadam/Mantra)*
 
+The content of the task is [here](https://github.com/michalakadam/Document-System/blob/master/task.txt)
+
 ##### How to run this program
 1. Clone this repo to the desired location: <br/> ```git clone https://github.com/michalakadam/BlueTestDocumentSystem.git```
 2. Enter directory with the project code: <br/> ```cd BlueTestDocumentSystem```
