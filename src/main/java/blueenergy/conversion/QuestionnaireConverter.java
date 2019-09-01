@@ -1,21 +1,21 @@
-package blueenergy.document;
+package blueenergy.conversion;
+
+import blueenergy.document.Questionnaire;
 
 import java.io.FileWriter;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class QuestionnaireConverter implements Converter<Questionnaire> {
 
-    private final TextGenerator textGenerator;
+    private final ReadableQuestionnaireGenerator textGenerator;
 
     private QuestionnaireConverter() {
-        this.textGenerator = TextGenerator.newInstance();
+        this.textGenerator = ReadableQuestionnaireGenerator.newInstance();
     }
 
     @Override
     public void convert(Questionnaire document) {
         String fileName = document.getTitle().replace(" ", "_").toLowerCase() + ".txt";
-        writeConvertedQuestionnaireToFile(textGenerator.generateQuestionnaireContent(document), fileName);
+        writeConvertedQuestionnaireToFile(textGenerator.generateText(document), fileName);
     }
 
     private void writeConvertedQuestionnaireToFile(String generatedDocumentContent, String fileName) {

@@ -1,13 +1,17 @@
-package blueenergy.document;
+package blueenergy.conversion;
+
+import blueenergy.document.Question;
+import blueenergy.document.Questionnaire;
 
 import java.util.List;
 
-class TextGenerator {
+class ReadableQuestionnaireGenerator implements TextGenerator<Questionnaire>{
 
 
-    private TextGenerator() {}
+    private ReadableQuestionnaireGenerator() {}
 
-    String generateQuestionnaireContent(Questionnaire document) {
+    @Override
+    public String generateText(Questionnaire document) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Question question : document.getQuestions()) {
             stringBuilder.append(appendQuestion(question));
@@ -37,7 +41,7 @@ class TextGenerator {
         return stringBuilder;
     }
 
-    static TextGenerator newInstance() {
-        return new TextGenerator();
+    static ReadableQuestionnaireGenerator newInstance() {
+        return new ReadableQuestionnaireGenerator();
     }
 }

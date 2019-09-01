@@ -1,5 +1,6 @@
 package blueenergy;
 
+import blueenergy.conversion.QuestionnaireConverter;
 import blueenergy.document.*;
 import blueenergy.organization.User;
 
@@ -9,18 +10,45 @@ import java.util.stream.Collectors;
 
 class ProgrammerService {
 
-
     void execute(DocumentDao documentDao) {
+        // Task No 1
+        // Split documents into distinct lists according to their type
         @SuppressWarnings("unchecked")
         List<Questionnaire> questionnaireList = (List<Questionnaire>) filterDocuments(documentDao, Questionnaire.class);
         @SuppressWarnings("unchecked")
-        List<ApplicationForHolidays> applicationForHolidaysList = (List<ApplicationForHolidays>) filterDocuments(documentDao, ApplicationForHolidays.class);
-        double averageNumberOfAnswersForAllQuestionsInAllQuestionnaires = calculateAverageNumberOfAnswers(questionnaireList);
+        List<ApplicationForHolidays> applicationForHolidaysList =
+                (List<ApplicationForHolidays>) filterDocuments(documentDao, ApplicationForHolidays.class);
+
+        // Task No 2
+        // Calculate average number of possible answers for all questions in all questionnaires
+        double averageNumberOfPossibleAnswers = calculateAverageNumberOfPossibleAnswers(questionnaireList);
+        System.out.println("Average number of possible answers: " + averageNumberOfPossibleAnswers);
+
+        // Task No 3
+        // Create a list of all users applying for holidays and check if any of them contains polish characters in login
         List<User> usersApplyingForHolidays = extractUsersFromApplications(applicationForHolidaysList);
         List<User> usersWithPolishCharacters = filterUsersWithPolishCharacters(usersApplyingForHolidays);
-        List<ApplicationForHolidays> applicationsWithWrongDates = checkForApplicationsWithWrongDates(applicationForHolidaysList);
-        QuestionnaireConverter converter = QuestionnaireConverter.newInstance();
-        questionnaireList.stream().forEach(converter::convert);
+        System.out.println("\nUsers' logins with Polish characters: ");
+        usersWithPolishCharacters
+                .stream()
+                .map(User::getLogin)
+                .forEach(System.out::println);
+
+        // Task No 4
+        // Create a list of holidays' applications that contain dates in wrong order
+        List<ApplicationForHolidays> applicationsWithWrongDates =
+                checkForApplicationsWithWrongDates(applicationForHolidaysList);
+        System.out.println("\nUsers who filled wrong dates in application for holidays: ");
+        applicationsWithWrongDates
+                .stream()
+                .map(ApplicationForHolidays::getUserWhoRequestAboutHolidays)
+                .map(User::getLogin)
+                .forEach(System.out::println);
+
+        // Task No 5
+        // Create a mechanism for converting Questionnaires to a user-friendly file format
+        QuestionnaireConverter questionnaireConverter = QuestionnaireConverter.newInstance();
+        questionnaireList.forEach(questionnaireConverter::convert);
     }
 
     private List<? extends Document> filterDocuments(DocumentDao documentDao, Class<? extends Document> classType) {
@@ -31,7 +59,7 @@ class ProgrammerService {
                 .collect(Collectors.toList());
     }
 
-    private double calculateAverageNumberOfAnswers(List<Questionnaire> questionnaireList) {
+    private double calculateAverageNumberOfPossibleAnswers(List<Questionnaire> questionnaireList) {
         int numberOfQuestions = 0;
         int numberOfPossibleAnswers = 0;
         for (Questionnaire questionnaire : questionnaireList) {
@@ -48,7 +76,6 @@ class ProgrammerService {
                 .mapToInt(question -> question.getPossibleAnswers().size())
                 .sum();
     }
-
 
     private double calculateAverage(double numberOfPossibleAnswers, double numberOfQuestions) {
         return numberOfPossibleAnswers/numberOfQuestions;
